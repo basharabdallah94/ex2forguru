@@ -1,0 +1,231 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tikz} % Added for TikZ graphics
+\usetikzlibrary{positioning} % Added for advanced node positioning
+\usetikzlibrary{arrows.meta} % for arrow size
+\usepackage[outline]{contour} % glow around text
+\contourlength{1.4pt}
+\usetikzlibrary{arrows.meta, positioning,calc}
+\usepackage{etoolbox} % for \ifnumcomp
+\usepackage{listofitems} % for \readlist to create arrays
+\usepackage{xcolor}
+\contourlength{1.4pt}
+\usepackage[outline]{contour} % glow around text
+
+
+
+
+
+\begin{document}
+
+\noindent\rule{\textwidth}{1pt} % Linha superior
+
+\begin{center}
+    \Large \textbf{Barium: Reinventing Human-Machine Interaction through Advanced Gesture Recognition} % Título
+\end{center}
+
+\noindent\rule{\textwidth}{3pt} % Linha inferior
+
+\bigskip % Espaçamento extra após a linha
+
+\begin{center}
+    \begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+    \centering \textbf{Daniel R. Alvarenga*} & \centering \textbf{Alvaro Richard*} & \centering \textbf{Vitor Eduardo S. de Carvalho*} \tabularnewline
+    \centering \href{mailto:danielralvs@proton.me}{danielralvs@proton.me} & \centering \href{mailto:alvarorichard@proton.me}{alvarorichard@proton.me} & \centering \href{mailto:vitorcarvalho@proton.me}{vitorcarvalho@proton.me} \tabularnewline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{p{0.3\textwidth}}
+    \centering \textbf{Robson Cardoso*} \tabularnewline
+    \centering \href{mailto:robsoncardoso@proton.me}{robsoncardoso@proton.me} \tabularnewline
+    \end{tabular}
+\end{center}
+\bigskip
+
+\begin{abstract}
+The "Barium" project emerges as a pioneering endeavor in the realm of Human-Machine Interfaces (HMI), harnessing the prowess of neural networks, machine learning, and deep learning to track and interpret human body movements, notably hand gestures. This paper delineates the development and application of a 4D neural network training approach, where time is regarded as a crucial dimension, heralding groundbreaking prospects in diverse technological domains. Developed in Python, Barium activates through webcam-captured hand gestures, facilitating user interactions with operating systems via predefined actions and a virtual mouse.
+\end{abstract}
+
+% Início da seção dos modelos de rede neural
+
+\section{Neural Network Models}
+For the development of this project, two advanced neural network models were elaborated. The first model employs three-dimensional convolution layers (Conv3D), which are exceptionally suitable for processing video data, owing to their ability to capture both spatial and temporal characteristics. The second model, of a sequential nature, is focused on optimizing performance. This model incorporates the scientific core of the project, demonstrating an innovative and efficient approach in the processing and analysis of video data.
+
+\subsection{Conv3D Model (Conventional Model)}
+The Conv3D Model, specifically designed for the processing of three-dimensional objects, stands out for its effectiveness in videos, resembling Recurrent Neural Network (RNN) models in terms of performance. However, its applicability is limited due to the requirement of intensive computational processing. Next, we present a detailed overview of this model, including the structure of its layers, the activation functions used, and the number of neurons in each segment:
+
+\subsection{Flatten Model (Efficient Model)}
+The Flatten Model represents a revolutionary milestone in the field of video processing. This sequential model, notable for its efficiency and speed, stands out for the innovative way it collects and processes data. The architecture of its neural network layers is designed to maximize efficiency, allowing users to reconfigure and retrain the network in a matter of seconds to incorporate new movements. This ability for rapid adaptation is a significant advancement, making the Flatten Model a powerful tool for dynamic and real-time applications.
+
+\section{Dataset Construction}
+
+The construction of a robust and representative dataset played a crucial role in the development of "Barium". This dataset is not only the backbone of the system but also the key to its authenticity and operational freedom. The efficacy of the project's neural network, which is responsible for the precise processing and interpretation of gestures, immensely depends on the quality and variety of the collected data.
+
+\subsection{Creation of the Collector}
+
+\textbf{Gesture Capture and Processing:} We developed a collector using a Python script to record movements and translate them into a numerical format. This allows for consistent representations of gestures to be encoded accurately.
+
+\textbf{Video Feature Extraction:} By decomposing each video into individual frames, we extract relevant data to build a diverse dataset, reflecting natural variations in the execution of gestures.
+
+\textbf{Conversion to Numerical Data:} Converting visual information from frames into a set of numerical coordinates $(x, y)$, as illustrated in our graphs, represents hand movements over time.
+
+\textbf{Normalization and Standardization:} We apply normalization and standardization techniques to reduce variability between samples, which is essential for the machine learning model to generalize from the collected data. The normalized coordinates $(x', y')$ are calculated as:
+
+\begin{equation}
+x' = \frac{x - \mu_x}{\sigma_x}, \quad y' = \frac{y - \mu_y}{\sigma_y}
+\end{equation}
+
+where $\mu_x$ and $\mu_y$ are the means of the $x$ and $y$ coordinates across the dataset, and $\sigma_x$ and $\sigma_y$ are their respective standard deviations.
+
+% Fim da seção de construção do dataset
+
+\subsection{Labeling and Data Annotation}
+
+Labeling and annotating our dataset was carried out with the following methodology: each gesture is numerically represented as a line in a CSV file, where "X" symbolizes the gesture data and "Y" a unique numerical identifier for each type of movement. The structure can be described by a regular expression to facilitate understanding:
+
+\begin{verbatim}
+((["][(][0-9]+[,][ ][0-9]+[)]["][,]){22}[0-9]+[.][0-9]+[,]){20}
+\end{verbatim}
+
+This approach allows the entire dataset to be submitted for training and testing of the neural network in a single file, ensuring flexibility and ease in data handling. The simplicity of data ingestion contrasts with the abstract complexity of the dataset's structure and its labeling. A single file containing a complete dataset for computational video vision, in numerical format, represents a significant advancement and provides an efficient alternative for neural network training.
+
+\subsection{Neural Network Input}
+
+The input to our neural networks is designed to capture the complexity and dynamics of human gestures. The dataset features are detailed in Table \ref{tab:dataset_features}, which represents the 20-dimensional input vector for our neural network.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Feature} & \textbf{Description} \\ \hline
+\( p0\_0 \) & Normalized x-coordinate of point 0 \\ \hline
+\( p1\_1 \) & Normalized y-coordinate of point 1 \\ \hline
+\( p2\_4 \) & Normalized x-coordinate of point 2 \\ \hline
+% ... Add all other features here
+\( p18\_20 \) & Normalized x-coordinate of point 18 \\ \hline
+\( p19\_18 \) & Normalized y-coordinate of point 19 \\ \hline
+
+\end{tabular}
+\caption{The 20-dimensional input vector representing hand gesture features and time represent the last number.}
+\label{tab:dataset_features}
+\end{table}
+
+Each row in the table corresponds to a feature extracted from the video frames, encapsulating the spatial positioning of hand landmarks. These features are subsequently flattened into a vector form for input into the neural network.
+
+\subsection{Optimization and Model Validation}
+
+To ensure the efficiency and efficacy of the neural network, we adopted a rigorous approach to optimization and validation. We used techniques such as cross-validation and hyperparameter tuning to find the ideal configuration that provides the best accuracy without falling into the trap of overfitting. Moreover, we employed regularization and dropout techniques to better generalize our model. Validation is performed with an independent test dataset, ensuring that the model can generalize well to data not seen during training.
+
+
+
+
+
+\subsection{Neural Network Diagram}
+\tikzset{>=latex} % for LaTeX arrow head
+
+
+\colorlet{myred}{red!80!black}
+\colorlet{myblue}{blue!80!black}
+\colorlet{mygreen}{green!60!black}
+\colorlet{myorange}{orange!70!red!60!black}
+\colorlet{mydarkred}{red!30!black}
+\colorlet{mydarkblue}{blue!40!black}
+\colorlet{mydarkgreen}{green!30!black}
+
+% STYLES
+\tikzset{
+  >=latex, % for default LaTeX arrow head
+  node/.style={thick,circle,draw=myblue,minimum size=22,inner sep=0.5,outer sep=0.6},
+  node in/.style={node,green!20!black,draw=mygreen!30!black,fill=mygreen!25},
+  node hidden/.style={node,blue!20!black,draw=myblue!30!black,fill=myblue!20},
+  node convol/.style={node,orange!20!black,draw=myorange!30!black,fill=myorange!20},
+  node out/.style={node,red!20!black,draw=myred!30!black,fill=myred!20},
+  connect/.style={thick,mydarkblue}, %,line cap=round
+  connect arrow/.style={-{Latex[length=4,width=3.5]},thick,mydarkblue,shorten <=0.5,shorten >=1},
+  node 1/.style={node in}, % node styles, numbered for easy mapping with \nstyle
+  node 2/.style={node hidden},
+  node 3/.style={node out}
+}
+\def\nstyle{int(\lay<\Nnodlen?min(2,\lay):3)} % map layer number onto 1, 2, or 3
+
+
+
+
+% NEURAL NETWORK with coefficients, arrows
+\begin{tikzpicture}[x=2.5cm,y=1.5cm]
+  \message{^^JNeural network with arrows}
+  \readlist\Nnod{4,5,5,5,3} % array of number of nodes per layer
+  
+  \message{^^J  Layer}
+  \foreachitem \N \in \Nnod{ % loop over layers
+    \edef\lay{\Ncnt} % alias of index of current layer
+    \message{\lay,}
+    \pgfmathsetmacro\prev{int(\Ncnt-1)} % number of previous layer
+    \foreach \i [evaluate={\y=\N/2-\i; \x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
+      
+      % NODES
+      \node[node \n] (N\lay-\i) at (\x,\y) {$a_\i^{(\prev)}$};
+      %\node[circle,inner sep=2] (N\lay-\i') at (\x-0.15,\y) {}; % shifted node
+      %\draw[node] (N\lay-\i) circle (\R);
+      
+      % CONNECTIONS
+      \ifnum\lay>1 % connect to previous layer
+        \foreach \j in {1,...,\Nnod[\prev]}{ % loop over nodes in previous layer
+          \draw[connect arrow] (N\prev-\j) -- (N\lay-\i); % connect arrows directly
+          %\draw[connect arrow] (N\prev-\j) -- (N\lay-\i'); % connect arrows to shifted node
+        }
+      \fi % else: nothing to connect first layer
+      
+    }
+    
+  }
+  
+ % Adjustments for label positioning
+% LABELS
+% Place the input layer label above the first layer
+
+\node[above of=N1-1, node distance=1cm] {input layer};
+  \node[above of=N3-1, node distance=1cm] {hidden layers};
+  \node[above of=N5-1, node distance=1cm] {output layer};
+
+% Now draw the arrows from labels to layers if needed
+  %\draw[->] (label-input) -- (N1-1);
+  %\draw[->] (label-hidden) -- (N3-3);
+  %\draw[->] (label-output) -- (N5-2);
+  
+\end{tikzpicture}
+
+
+
+\subsection{Activation Functions}
+Activation functions introduce non-linearity to the neural network, enabling it to learn complex patterns. In our models, we use the following activation functions:
+
+\textbf{ReLU (Rectified Linear Unit):} Applied to hidden layers, ReLU introduces non-linearity, enhancing the network's ability to capture a wide range of phenomena:
+\begin{equation}
+f(x) = \max(0, x)
+\end{equation}
+
+\textbf{Sigmoid:} Often used in the output layer for binary classification, it squashes the input to a range between 0 and 1, suitable for binary outcome predictions:
+\begin{equation}
+\sigma(x) = \frac{1}{1 + e^{-x}}
+\end{equation}
+
+\textbf{Softmax:} Utilized in the output layer for multi-class classification, Softmax provides a probability distribution over various classes:
+\begin{equation}
+\sigma(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{k=1}^{K} e^{z_k}}
+\end{equation}
+for \( i = 1, \ldots, K \), where \( K \) is the number of classes.
+
+\clearpage % This will ensure that the conclusion starts on a new page.
+
+\section{Conclusion}
+"Barium" stands as a significant milestone in human-computer interaction. The successful integration of neural networks and hand-tracking technologies not only demonstrates the technical feasibility of such innovations but also opens new avenues for intuitive and accessible interfaces. The project extends its impact beyond technology, influencing fields like education, healthcare, and entertainment.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
